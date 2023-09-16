@@ -1,5 +1,6 @@
 import json
 import webbrowser
+import re
 
 with open('json\world_universities_and_domains.json', 'r', encoding='utf-8') as arquivo:
     dados_json = json.load(arquivo)
@@ -86,21 +87,22 @@ def escolha1():
 
 def escolha2(str2):
     for universidade in dados_json:
-        if universidade["name"] == str2:
-                print ("Nome: ", universidade["name"])
-                print ("País: ", universidade["country"])
-                print ("Sigla do País: ", universidade["alpha_two_code"])
-                web_pages = ", ".join(universidade["web_pages"])
-                print("Sites da Universidade:", web_pages)
-            
-
-        
-             
+        nome_universidade = universidade["name"]
+        if re.search(re.escape(str2), nome_universidade, re.IGNORECASE):
+            print ("Nome: ", nome_universidade)
+            print ("País: ", universidade["country"])
+            print ("Sigla do País: ", universidade["alpha_two_code"])
+            web_pages = ", ".join(universidade["web_pages"])
+            print("Sites da Universidade:", web_pages)
                 
+def escolha3(str3):
+    for universidade in dados_json:
+        for url in universidade["web_pages"]:
+            if re.search(re.escape(str3), url, re.IGNORECASE):
+                webbrowser.open(url)
+                return
+    print("Universidade não encontrada")
                 
-        
-        
-    
 
 def menu():
     opc = 0
@@ -120,9 +122,9 @@ def menu():
             case 2:
                 busca = str(input("Digite o nome da Universidade: "))
                 escolha2(busca)
-                
-        print("")        
-
+            case 3:
+                busca1 = str(input("Digite o link para o site da Universidade: "))
+                escolha3(busca1)
 
     
 
