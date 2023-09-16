@@ -37,8 +37,22 @@ def mostrar_dic2(str2,x):
             dic_exemplo2[x] = {x:[universidade["name"],universidade["web_pages"]]}
     for itens in dic_exemplo2.values():
         print(itens) 
+        
+def mostrar_escolha(dic, id):
+    if id in dic:
+        nome_universidade, link = dic[id][id][0], dic[id][id][1]
+        print(f"Nome da Universidade: {nome_universidade}")
+        print(f"Link da Universidade: {link[0]}")
+        try:
+            webbrowser.open(link[0])
+        except Exception:
+            print("Não foi possivel acessar o Site")
+    else:
+        print("Universidade não encontrada")
+
     
     
+
 def escolha1():
     opc = 0
     while opc != 3:
@@ -66,19 +80,19 @@ def escolha1():
                 else:
                     mostrar_dic2(busca, 0)
                     id = int(input("Digite o Número da Universidade que deseja ver: "))  
-                    mostrar_escolha(id,dic_exemplo2) 
+                    mostrar_escolha(dic_exemplo2,id) 
              
                 
 
 def escolha2(str2):
     for universidade in dados_json:
         if universidade["name"] == str2:
-                print (universidade["name"])
-                print (universidade["country"])
-                print (universidade["alpha_two_code"])
-        else:
-            print("Universidade não encontrada")
-            break
+                print ("Nome: ", universidade["name"])
+                print ("País: ", universidade["country"])
+                print ("Sigla do País: ", universidade["alpha_two_code"])
+                web_pages = ", ".join(universidade["web_pages"])
+                print("Sites da Universidade:", web_pages)
+            
 
         
              
@@ -93,7 +107,7 @@ def menu():
     while opc != 4:
         print("Bem vindo a busca por universidades pelo mundo")
         print("----------------------------------------------")
-        print("1 - Procurar universdades pelo país")
+        print("1 - Procurar universidades pelo país")
         print("2 - Procurar universidades pelo nome")
         print("3 - Procurar site de uma universidade")
         print("4 - Sair")
